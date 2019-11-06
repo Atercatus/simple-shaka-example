@@ -4,7 +4,7 @@ const path = require("path");
 const https = require("https");
 
 const STATUS = require("./vendor/status");
-const { makeOption } = require("./vendor/helper");
+const Helper = require("./vendor/helper");
 
 const app = express();
 const PORT = process.env.PORT || 4040;
@@ -25,7 +25,7 @@ app.post("/test", (req, res) => {
   const vodTranscoder = { host: process.env.VOD_TRANSACTION_HOST };
   const now = Date.now().toString();
 
-  const option = makeOption({
+  const option = Helper.makeOption({
     host: vodTranscoder.host,
     method: "GET",
     path: `/api/v2/jobs/${jobId}`,
