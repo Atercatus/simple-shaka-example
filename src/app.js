@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const https = require("https");
+const request = require("request");
 
 const STATUS = require("./vendor/status");
 const { makeOption } = require("./vendor/helper");
@@ -22,11 +23,10 @@ app.post("/test", (req, res) => {
     return;
   }
 
-  const vodTranscoder = { host: process.env.VOD_TRANSACTION_HOST };
   const now = Date.now().toString();
 
   const option = makeOption({
-    host: vodTranscoder.host,
+    host: process.env.VOD_TRANSACTION_HOST,
     method: "GET",
     path: `/api/v2/jobs/${jobId}`,
     timestamp: now,
@@ -35,25 +35,36 @@ app.post("/test", (req, res) => {
     secretKey: process.env.SECRET_KEY
   });
 
-  const request = https.request(option, res => {
-    console.log(`STATUS: ${res.statusCode}`);
-    console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-    res.setEncoding("utf8");
-    res.on("data", chunk => {
-      console.log(`BODY: ${chunk}`);
-    });
-    res.on("end", () => {
-      console.log("No more data in response.");
-    });
+  const _option = {
+    url: `https://${process.env.VOD_TRANSACTION_HOST}`,
+    headers: option.headers
+  };
+
+  request(_option, function(error, response, body) {
+    console.log("error:", error); // Print the error if one occurred
+    console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
+    console.log("body:", body); // Print the HTML for the Google homepage.
   });
 
-  request.on("error", e => {
-    console.error(`problem with request: ${e.message}`);
-  });
+  // const request = https.request(option, res => {
+  //   console.log(`STATUS: ${res.statusCode}`);
+  //   console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+  //   res.setEncoding("utf8");
+  //   res.on("data", chunk => {
+  //     console.log(`BODY: ${chunk}`);
+  //   });
+  //   res.on("end", () => {
+  //     console.log("No more data in response.");
+  //   });
+  // });
 
-  request.write(body);
+  // request.on("error", e => {
+  //   console.error(`problem with request: ${e.message}`);
+  // });
 
-  request.end();
+  // request.write(body);
+
+  // request.end();
 });
 
 app.get("/", (req, res) => {
