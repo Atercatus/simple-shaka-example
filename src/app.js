@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.post("/test", (req, res) => {
   const { jobId, status } = req.body;
-
+  console.log(req.body);
   if (status !== STATUS.success) {
     return;
   }
@@ -36,14 +36,19 @@ app.post("/test", (req, res) => {
   });
 
   const _option = {
-    url: `https://${process.env.VOD_TRANSACTION_HOST}`,
+    url: `https://${process.env.VOD_TRANSACTION_HOST}${option.path}`,
     headers: option.headers
   };
+  console.log(_option);
 
   request(_option, function(error, response, body) {
     console.log("error:", error); // Print the error if one occurred
     console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
-    console.log("body:", body); // Print the HTML for the Google homepage.
+    console.log("body:", JSON.parse(body)); // Print the HTML for the Google homepage.
+    const jobs = JSON.parse(body).jobs;
+    const output = jobs[0].output;
+    console.log("output:", output);
+
   });
 
   // const request = https.request(option, res => {
