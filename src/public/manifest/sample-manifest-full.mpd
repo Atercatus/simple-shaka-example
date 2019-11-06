@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Generated with https://github.com/google/shaka-packager version 1bcaf0a-release-->
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:mpeg:dash:schema:mpd:2011 DASH-MPD.xsd" profiles="urn:mpeg:dash:profile:isoff-on-demand:2011" minBufferTime="PT3S" type="static" mediaPresentationDuration="PT27.33333396911621S">
+  <Period id="0">
+    <AdaptationSet id="0" contentType="video" maxWidth="1278" maxHeight="720" frameRate="12288/512" subsegmentAlignment="true" par="16:9">
+      <Representation id="0" bandwidth="430715" codecs="avc1.64001e" mimeType="video/mp4" sar="639:640" width="640" height="360">
+        <BaseURL>./dest/sample360_video.mp4</BaseURL>
+        <SegmentBase indexRange="875-1026" timescale="12288">
+          <Initialization range="0-874"/>
+        </SegmentBase>
+      </Representation>
+      <Representation id="1" bandwidth="1576446" codecs="avc1.64001f" mimeType="video/mp4" sar="1:1" width="1278" height="720">
+        <BaseURL>./dest/sample720_video.mp4</BaseURL>
+        <SegmentBase indexRange="855-1006" timescale="12288">
+          <Initialization range="0-854"/>
+        </SegmentBase>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet id="1" contentType="audio">
+      <Representation id="2" bandwidth="79354" codecs="mp4a.40.2" mimeType="audio/mp4" audioSamplingRate="22050">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
+        <BaseURL>./dest/sample360_audio.mp4</BaseURL>
+        <SegmentBase indexRange="789-940" timescale="22050">
+          <Initialization range="0-788"/>
+        </SegmentBase>
+      </Representation>
+      <Representation id="3" bandwidth="260620" codecs="mp4a.40.2" mimeType="audio/mp4" audioSamplingRate="48000">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
+        <BaseURL>./dest/sample720_audio.mp4</BaseURL>
+        <SegmentBase indexRange="789-940" timescale="48000">
+          <Initialization range="0-788"/>
+        </SegmentBase>
+      </Representation>
+    </AdaptationSet>
+  </Period>
+</MPD>

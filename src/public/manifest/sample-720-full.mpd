@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Generated with https://github.com/google/shaka-packager version 1bcaf0a-release-->
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:mpeg:dash:schema:mpd:2011 DASH-MPD.xsd" profiles="urn:mpeg:dash:profile:isoff-on-demand:2011" minBufferTime="PT3S" type="static" mediaPresentationDuration="PT5.666666507720947S">
+  <Period id="0">
+    <AdaptationSet id="0" contentType="video" width="404" height="720" frameRate="15360/512" subsegmentAlignment="true" par="9:16">
+      <Representation id="0" bandwidth="1503078" codecs="avc1.64001e" mimeType="video/mp4" sar="1:1">
+        <BaseURL>./dest/sample720_video.mp4</BaseURL>
+        <SegmentBase indexRange="854-909" timescale="15360">
+          <Initialization range="0-853"/>
+        </SegmentBase>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet id="1" contentType="audio" subsegmentAlignment="true">
+      <Representation id="1" bandwidth="293078" codecs="mp4a.40.2" mimeType="audio/mp4" audioSamplingRate="48000">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
+        <BaseURL>./dest/sample720_audio.mp4</BaseURL>
+        <SegmentBase indexRange="789-844" timescale="48000">
+          <Initialization range="0-788"/>
+        </SegmentBase>
+      </Representation>
+    </AdaptationSet>
+  </Period>
+</MPD>
