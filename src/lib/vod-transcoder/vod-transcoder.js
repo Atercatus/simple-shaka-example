@@ -2,7 +2,6 @@ const request = require("request-promise");
 
 const STATUS = require("../../vendor/status");
 const { makeOption } = require("../../vendor/helper");
-const S3 = require("../../vendor/bucket");
 
 function isSuccess(status) {
   return status === STATUS.success;

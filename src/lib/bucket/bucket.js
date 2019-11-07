@@ -1,10 +1,10 @@
 const S3 = require("../../vendor/bucket-api");
 
-// function getObject() {
-//   const params = {
-//     Bucket: process.env.BUCKET_NAME,
-//     Prefix
-//   };
+function test(output) {
+  const bucketName = output.outputBucketName;
+  const prefix = output.outputFiles[0].outputFileName.split("-")[0];
+  console.log(bucketName);
+  console.log(prefix);
+}
 
-//   S3.getObject({});
-// }
+module.exports = { test };
