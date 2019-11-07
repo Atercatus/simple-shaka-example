@@ -2,7 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const https = require("https");
-const request = require("request");
+//const request = require("request");
+const request = require("request-promise");
 
 const STATUS = require("./vendor/status");
 const { makeOption } = require("./vendor/helper");
@@ -16,7 +17,7 @@ app.use("/js", express.static("public/js"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.post("/test", (req, res) => {
+app.post("/test", async (req, res) => {
   const { jobId, status } = req.body;
   console.log(req.body);
   if (status !== STATUS.success) {
@@ -41,35 +42,12 @@ app.post("/test", (req, res) => {
   };
   console.log(_option);
 
-  request(_option, function(error, response, body) {
-    console.log("error:", error); // Print the error if one occurred
-    console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
-    console.log("body:", JSON.parse(body)); // Print the HTML for the Google homepage.
-    const jobs = JSON.parse(body).jobs;
-    const output = jobs[0].output;
-    console.log("output:", output);
+  const result = await request(_option);
+  const jobs = JSON.parse(result).jobs;
+  const output = jobs[0].output;
+  console.log("output", output);
+  
 
-  });
-
-  // const request = https.request(option, res => {
-  //   console.log(`STATUS: ${res.statusCode}`);
-  //   console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-  //   res.setEncoding("utf8");
-  //   res.on("data", chunk => {
-  //     console.log(`BODY: ${chunk}`);
-  //   });
-  //   res.on("end", () => {
-  //     console.log("No more data in response.");
-  //   });
-  // });
-
-  // request.on("error", e => {
-  //   console.error(`problem with request: ${e.message}`);
-  // });
-
-  // request.write(body);
-
-  // request.end();
 });
 
 app.get("/", (req, res) => {
