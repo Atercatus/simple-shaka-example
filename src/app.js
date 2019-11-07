@@ -1,8 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const https = require("https");
-// const request = require("request");
 const request = require("request-promise");
 
 const STATUS = require("./vendor/status");
@@ -17,9 +15,9 @@ app.use("/js", express.static("public/js"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.post("/test", (req, res) => {
+app.post("/test", async (req, res) => {
   const { jobId, status } = req.body;
-
+  console.log(req.body);
   if (status !== STATUS.success) {
     return;
   }
@@ -37,12 +35,15 @@ app.post("/test", (req, res) => {
   });
 
   const _option = {
-    url: `https://${process.env.VOD_TRANSACTION_HOST}`,
+    url: `https://${process.env.VOD_TRANSACTION_HOST}${option.path}`,
     headers: option.headers
   };
+  console.log(_option);
 
-  const res = request(_option);
-  console.log(res);
+  const result = await request(_option);
+  const jobs = JSON.parse(result).jobs;
+  const output = jobs[0].output;
+  console.log("output", output);
 
   const bucketName = process.env.BUCKET_NAME;
 });
