@@ -2,7 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const https = require("https");
-const request = require("request");
+// const request = require("request");
+const request = require("request-promise");
 
 const STATUS = require("./vendor/status");
 const { makeOption } = require("./vendor/helper");
@@ -40,31 +41,10 @@ app.post("/test", (req, res) => {
     headers: option.headers
   };
 
-  request(_option, function(error, response, body) {
-    console.log("error:", error); // Print the error if one occurred
-    console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
-    console.log("body:", body); // Print the HTML for the Google homepage.
-  });
+  const res = request(_option);
+  console.log(res);
 
-  // const request = https.request(option, res => {
-  //   console.log(`STATUS: ${res.statusCode}`);
-  //   console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-  //   res.setEncoding("utf8");
-  //   res.on("data", chunk => {
-  //     console.log(`BODY: ${chunk}`);
-  //   });
-  //   res.on("end", () => {
-  //     console.log("No more data in response.");
-  //   });
-  // });
-
-  // request.on("error", e => {
-  //   console.error(`problem with request: ${e.message}`);
-  // });
-
-  // request.write(body);
-
-  // request.end();
+  const bucketName = process.env.BUCKET_NAME;
 });
 
 app.get("/", (req, res) => {
