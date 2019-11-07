@@ -4,6 +4,7 @@ const express = require("express");
 const {
   acceptNcloudNotification
 } = require("../vod-transcoder/vod-transcoder");
+const { test } = require("../bucket/bucket");
 
 const indexRouter = express.Router();
 
@@ -13,10 +14,7 @@ indexRouter.post("/test", async (req, res) => {
   if (!output) return;
   console.log(output);
 
-  const bucketName = output.outputBucketName;
-  const prefix = output.outputFiles[0].outputFileName.split("-")[0];
-  console.log(bucketName);
-  console.log(prefix);
+  test(output);
 });
 
 indexRouter.get("/", (req, res) => {
