@@ -29,10 +29,9 @@ async function getJobOutput(option) {
 async function acceptNcloudNotification(req) {
   const { jobId, status } = req.body;
   console.log(req.body);
+  if (!isSuccess(status)) return;
 
   const now = Date.now().toString();
-
-  if (!isSuccess(status)) return;
 
   const option = getVODTranscoderAPIOption({
     timestamp: now,

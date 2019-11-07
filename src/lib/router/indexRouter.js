@@ -9,14 +9,18 @@ const indexRouter = express.Router();
 
 indexRouter.post("/test", async (req, res) => {
   const output = await acceptNcloudNotification(req);
+
+  if (!output) return;
   console.log(output);
 
-  const bucketName = process.env.BUCKET_NAME;
+  const bucketName = output.outputBucketName;
+  const prefix = output.outputFiles[0].outputFileName.split("-")[0];
+  console.log(bucketName);
+  console.log(prefix);
 });
 
 indexRouter.get("/", (req, res) => {
   console.log("test");
-  // const html = fs.readFileSync(path.resolve(__dirname, "./view/index.html"));
   res.sendFile(path.join(__dirname, "/view/index.html"));
 });
 
